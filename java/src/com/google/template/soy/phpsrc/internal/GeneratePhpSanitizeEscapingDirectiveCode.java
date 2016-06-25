@@ -239,9 +239,9 @@ public final class GeneratePhpSanitizeEscapingDirectiveCode
         // we have to transform JS style objects to PHP
         String code = outputCode.toString()
             // opening brace
-            .replaceAll("= \\{", "= [")
+            .replaceAll("= \\{", "= array(")
             // closing brace
-            .replaceAll("\\};", "];")
+            .replaceAll("\\};", ");")
             // key => value assignment
             .replaceAll("': '", "' => '")
             // '\"' => '"'
@@ -286,13 +286,13 @@ public final class GeneratePhpSanitizeEscapingDirectiveCode
     private String toPhpStringArray(Iterable<String> strings) {
         StringBuilder sb = new StringBuilder();
         boolean isFirst = true;
-        sb.append('[');
+        sb.append("array(");
         for (String str : strings) {
             if (!isFirst) { sb.append(", "); }
             isFirst = false;
             writeStringLiteral(str, sb);
         }
-        sb.append(']');
+        sb.append(")");
         return sb.toString();
     }
 

@@ -849,7 +849,7 @@ final class GenPhpCodeVisitor extends AbstractSoyNodeVisitor<List<String>> {
 
         // Generate statement to ensure data exists as an object, if ever used.
         if (new ShouldEnsureDataIsDefinedVisitor(errorReporter).exec(node)) {
-            phpCodeBuilder.appendLine("$opt_data = is_array($opt_data) ? $opt_data : [];");
+            phpCodeBuilder.appendLine("$opt_data = is_array($opt_data) ? $opt_data : array();");
         }
 
         // Type check parameters.
@@ -955,7 +955,7 @@ final class GenPhpCodeVisitor extends AbstractSoyNodeVisitor<List<String>> {
                         case RECORD:
                         case MAP:
                             typePredicate = "is_array({0})";
-                            defaultValue = "[]";
+                            defaultValue = "array()";
                             break;
 
                         case OBJECT:
@@ -1113,7 +1113,7 @@ final class GenPhpCodeVisitor extends AbstractSoyNodeVisitor<List<String>> {
                 case RECORD:
                 case MAP:
                     typeTests.add("is_array({0})");
-                    defaultVal = "[]";
+                    defaultVal = "array()";
                     break;
 
                 case OBJECT:

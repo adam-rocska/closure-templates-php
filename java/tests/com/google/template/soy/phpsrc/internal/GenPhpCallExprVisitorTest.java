@@ -65,7 +65,7 @@ public final class GenPhpCallExprVisitorTest extends TestCase {
         String soyCode = "{call .goo}\n"
                 + "  {param goo: $moo /}\n"
                 + "{/call}\n";
-        String expectedPhpCode = "self::goo(['goo' => isset($opt_data['moo']) ? $opt_data['moo'] : null], $opt_ijData)";
+        String expectedPhpCode = "self::goo(array('goo' => isset($opt_data['moo']) ? $opt_data['moo'] : null), $opt_ijData)";
 
         assertThatSoyFile(String.format(SOY_BASE, soyCode)).compilesToSourceContaining(expectedPhpCode);
 
@@ -73,7 +73,7 @@ public final class GenPhpCallExprVisitorTest extends TestCase {
         soyCode = "{call .goo}\n"
                 + "  {param goo kind=\"text\"}Hello{/param}\n"
                 + "{/call}\n";
-        expectedPhpCode = "self::goo(['goo' => new \\Goog\\Soy\\UnsanitizedText('Hello')], $opt_ijData)";
+        expectedPhpCode = "self::goo(array('goo' => new \\Goog\\Soy\\UnsanitizedText('Hello')), $opt_ijData)";
 
         assertThatSoyFile(String.format(SOY_BASE, soyCode)).compilesToSourceContaining(expectedPhpCode);
 
@@ -82,8 +82,8 @@ public final class GenPhpCallExprVisitorTest extends TestCase {
                 + "  {param goo: $moo /}\n"
                 + "  {param moo kind=\"text\"}Hello{/param}\n"
                 + "{/call}\n";
-        expectedPhpCode = "self::goo(['goo' => isset($opt_data['moo']) ? $opt_data['moo'] : null, " +
-                "'moo' => new \\Goog\\Soy\\UnsanitizedText('Hello')], $opt_ijData)";
+        expectedPhpCode = "self::goo(array('goo' => isset($opt_data['moo']) ? $opt_data['moo'] : null, " +
+                "'moo' => new \\Goog\\Soy\\UnsanitizedText('Hello')), $opt_ijData)";
 
         assertThatSoyFile(String.format(SOY_BASE, soyCode)).compilesToSourceContaining(expectedPhpCode);
 
@@ -92,7 +92,7 @@ public final class GenPhpCallExprVisitorTest extends TestCase {
                 + "  {param goo: $moo /}\n"
                 + "{/call}\n";
         expectedPhpCode =
-                "self::goo(array_replace(['goo' => isset($opt_data['moo']) ? $opt_data['moo'] : null], " +
+                "self::goo(array_replace(array('goo' => isset($opt_data['moo']) ? $opt_data['moo'] : null), " +
                         "isset($opt_data['bar']) ? $opt_data['bar'] : null), $opt_ijData)";
 
         assertThatSoyFile(String.format(SOY_BASE, soyCode)).compilesToSourceContaining(expectedPhpCode);
@@ -104,7 +104,7 @@ public final class GenPhpCallExprVisitorTest extends TestCase {
                 + "    {for $i in range(3)}{$i}{/for}\n"
                 + "  {/param}\n"
                 + "{/call}\n";
-        String expectedPhpCode = "self::goo(['moo' => new \\Goog\\Soy\\UnsanitizedText($param###)], $opt_ijData)";
+        String expectedPhpCode = "self::goo(array('moo' => new \\Goog\\Soy\\UnsanitizedText($param###)), $opt_ijData)";
 
         assertThatSoyFile(String.format(SOY_BASE, soyCode)).compilesToSourceContaining(expectedPhpCode);
     }

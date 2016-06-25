@@ -183,13 +183,13 @@ public final class PhpExprUtils {
         }
 
         Joiner joiner = Joiner.on(", ");
-        return new PhpExpr("[" + joiner.join(values) + "]", Integer.MAX_VALUE);
+        return new PhpExpr("array(" + joiner.join(values) + ")", Integer.MAX_VALUE);
     }
 
     private static PhpExpr convertIterableToPhpExpr(Iterable<?> iterable) {
         List<String> values = new ArrayList<>();
-        String leftDelimiter = "[";
-        String rightDelimiter = "]";
+        String leftDelimiter = "array(";
+        String rightDelimiter = ")";
 
         for (Object elem : iterable) {
             if (!(elem instanceof Number || elem instanceof String || elem instanceof PhpExpr)) {
