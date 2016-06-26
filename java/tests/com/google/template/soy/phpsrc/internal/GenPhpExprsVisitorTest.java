@@ -153,8 +153,8 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "Translator::prepare("
                         + "###, "
                         + "'Hello {USERNAME}', "
-                        + "['USERNAME'], 'var placeholder', null), "
-                        + "['USERNAME' => isset($opt_data['username']) ? $opt_data['username'] : null])";
+                        + "array('USERNAME'), 'var placeholder', null), "
+                        + "array('USERNAME' => isset($opt_data['username']) ? $opt_data['username'] : null))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -170,11 +170,11 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "Translator::prepare("
                         + "###, "
                         + "'{GREET} {USERNAME}', "
-                        + "['GREET', 'USERNAME'], 'var placeholder', null), "
-                        + "["
+                        + "array('GREET', 'USERNAME'), 'var placeholder', null), "
+                        + "array("
                         + "'GREET' => isset($opt_data['greet']) ? $opt_data['greet'] : null, "
                         + "'USERNAME' => isset($opt_data['username']) ? $opt_data['username'] : null"
-                        + "])";
+                        + "))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -190,11 +190,11 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "Translator::prepare("
                         + "###, "
                         + "'{GREET} {{USERNAME}}', "
-                        + "['GREET', 'USERNAME'], 'var placeholder', null), "
-                        + "["
+                        + "array('GREET', 'USERNAME'), 'var placeholder', null), "
+                        + "array("
                         + "'GREET' => isset($opt_data['greet']) ? $opt_data['greet'] : null, "
                         + "'USERNAME' => isset($opt_data['username']) ? $opt_data['username'] : null"
-                        + "])";
+                        + "))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -210,8 +210,8 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "Translator::prepare("
                         + "###, "
                         + "'Hello {BAR}', "
-                        + "['BAR'], 'placeholder with namespace', null), "
-                        + "['BAR' => isset($opt_data['foo']['bar']) ? $opt_data['foo']['bar'] : null])";
+                        + "array('BAR'), 'placeholder with namespace', null), "
+                        + "array('BAR' => isset($opt_data['foo']['bar']) ? $opt_data['foo']['bar'] : null))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -226,8 +226,8 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "Translator::prepare("
                         + "###, "
                         + "'Hello {XXX}', "
-                        + "['XXX'], 'var placeholder', null), "
-                        + "['XXX' => Runtime::typeSafeAdd(isset($opt_data['username']) ? $opt_data['username'] : null, 1)])";
+                        + "array('XXX'), 'var placeholder', null), "
+                        + "array('XXX' => Runtime::typeSafeAdd(isset($opt_data['username']) ? $opt_data['username'] : null, 1)))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -243,11 +243,11 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "Translator::prepare("
                         + "###, "
                         + "'Please click {START_LINK}here{END_LINK}.', "
-                        + "['START_LINK', 'END_LINK'], 'with link', null), "
-                        + "["
+                        + "array('START_LINK', 'END_LINK'), 'with link', null), "
+                        + "array("
                         + "'START_LINK' => '<a href=\\''.(isset($opt_data['url']) ? $opt_data['url'] : null).'\\'>', "
                         + "'END_LINK' => '</a>'"
-                        + "])";
+                        + "))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -266,17 +266,17 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                 "Translator::renderPlural("
                         + "Translator::preparePlural("
                         + "###, "
-                        + "["
+                        + "array("
                         + "'=0' => 'No drafts', "
                         + "'=1' => '1 draft', "
                         + "'other' => '{NUM_DRAFTS_2} drafts'"
-                        + "], "
-                        + "['NUM_DRAFTS_1', 'NUM_DRAFTS_2'], 'simple plural', null), "
+                        + "), "
+                        + "array('NUM_DRAFTS_1', 'NUM_DRAFTS_2'), 'simple plural', null), "
                         + "isset($opt_data['numDrafts']) ? $opt_data['numDrafts'] : null, "
-                        + "["
+                        + "array("
                         + "'NUM_DRAFTS_1' => isset($opt_data['numDrafts']) ? $opt_data['numDrafts'] : null, "
                         + "'NUM_DRAFTS_2' => isset($opt_data['numDrafts']) ? $opt_data['numDrafts'] : null"
-                        + "])";
+                        + "))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -295,17 +295,17 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                 "Translator::renderPlural("
                         + "Translator::preparePlural("
                         + "###, "
-                        + "["
+                        + "array("
                         + "'=0' => 'No drafts', "
                         + "'=1' => '1 draft', "
                         + "'other' => '{XXX} drafts'"
-                        + "], "
-                        + "['NUM_DRAFTS', 'XXX'], 'offset plural', null), "
+                        + "), "
+                        + "array('NUM_DRAFTS', 'XXX'), 'offset plural', null), "
                         + "isset($opt_data['numDrafts']) ? $opt_data['numDrafts'] : null, "
-                        + "["
+                        + "array("
                         + "'NUM_DRAFTS' => isset($opt_data['numDrafts']) ? $opt_data['numDrafts'] : null, "
                         + "'XXX' => (isset($opt_data['numDrafts']) ? $opt_data['numDrafts'] : null) - 2"
-                        + "])";
+                        + "))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -353,11 +353,11 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                         + "other{Reply to them.}}"
                         + "}"
                         + "}', "
-                        + "['USER_GENDER', 'TARGET_GENDER'], '...', null), "
-                        + "["
+                        + "array('USER_GENDER', 'TARGET_GENDER'), '...', null), "
+                        + "array("
                         + "'USER_GENDER' => isset($opt_data['userGender']) ? $opt_data['userGender'] : null, "
                         + "'TARGET_GENDER' => isset($opt_data['targetGender']) ? $opt_data['targetGender'] : null"
-                        + "])";
+                        + "))";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));
     }
@@ -438,14 +438,14 @@ public final class GenPhpExprsVisitorTest extends TestCase {
                 + "}"
                 + "}"
                 + "}', "
-                + "['PEOPLE_0_GENDER', 'PEOPLE_1_GENDER', 'NUM', 'NAME_1', 'NAME_2'], 'plural with offsets', null), "
-                + "["
+                + "array('PEOPLE_0_GENDER', 'PEOPLE_1_GENDER', 'NUM', 'NAME_1', 'NAME_2'), 'plural with offsets', null), "
+                + "array("
                 + "'PEOPLE_0_GENDER' => isset($opt_data['people'][0]['gender']) ? $opt_data['people'][0]['gender'] : null, "
                 + "'PEOPLE_1_GENDER' => isset($opt_data['people'][1]['gender']) ? $opt_data['people'][1]['gender'] : null, "
                 + "'NUM' => count(isset($opt_data['people']) ? $opt_data['people'] : null), "
                 + "'NAME_1' => isset($opt_data['people'][0]['name']) ? $opt_data['people'][0]['name'] : null, "
                 + "'NAME_2' => isset($opt_data['people'][1]['name']) ? $opt_data['people'][1]['name'] : null"
-                + "]"
+                + ")"
                 + ")";
 
         assertThatSoyExpr(soyCode).compilesTo(new PhpExpr(expectedPhpCode, Integer.MAX_VALUE));

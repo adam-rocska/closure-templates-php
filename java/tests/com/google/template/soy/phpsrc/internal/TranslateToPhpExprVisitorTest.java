@@ -55,29 +55,29 @@ public class TranslateToPhpExprVisitorTest extends TestCase {
     }
 
     public void testListLiteral() {
-        assertThatSoyExpr("[]").translatesTo(new PhpExpr("[]", Integer.MAX_VALUE), PhpArrayExpr.class);
+        assertThatSoyExpr("[]").translatesTo(new PhpExpr("array()", Integer.MAX_VALUE), PhpArrayExpr.class);
         assertThatSoyExpr("['blah', 123, $foo]").translatesTo(
-                new PhpExpr("['blah', 123, isset($opt_data['foo']) ? $opt_data['foo'] : null]", Integer.MAX_VALUE), PhpArrayExpr.class);
+                new PhpExpr("array('blah', 123, isset($opt_data['foo']) ? $opt_data['foo'] : null)", Integer.MAX_VALUE), PhpArrayExpr.class);
     }
 
     public void testMapLiteral() {
         // Unquoted keys.
-        assertThatSoyExpr("[:]").translatesTo(new PhpExpr("[]", Integer.MAX_VALUE));
+        assertThatSoyExpr("[:]").translatesTo(new PhpExpr("array()", Integer.MAX_VALUE));
         assertThatSoyExpr("['aaa': 123, 'bbb': 'blah']").translatesTo(
-                new PhpExpr("['aaa' => 123, 'bbb' => 'blah']", Integer.MAX_VALUE));
+                new PhpExpr("array('aaa' => 123, 'bbb' => 'blah')", Integer.MAX_VALUE));
         assertThatSoyExpr("['aaa': $foo, 'bbb': 'blah']").translatesTo(
-                new PhpExpr("['aaa' => isset($opt_data['foo']) ? $opt_data['foo'] : null, 'bbb' => 'blah']", Integer.MAX_VALUE));
+                new PhpExpr("array('aaa' => isset($opt_data['foo']) ? $opt_data['foo'] : null, 'bbb' => 'blah')", Integer.MAX_VALUE));
 
         // Non-string keys are allowed in PHP.
         assertThatSoyExpr("[1: 'blah', 0: 123]").translatesTo(
-                new PhpExpr("[1 => 'blah', 0 => 123]", Integer.MAX_VALUE));
+                new PhpExpr("array(1 => 'blah', 0 => 123)", Integer.MAX_VALUE));
     }
 
     public void testMapLiteral_quotedKeysIfJS() {
         // QuotedKeysIfJs should change nothing in PHP.
-        assertThatSoyExpr("quoteKeysIfJs([:])").translatesTo(new PhpExpr("[]", Integer.MAX_VALUE));
+        assertThatSoyExpr("quoteKeysIfJs([:])").translatesTo(new PhpExpr("array()", Integer.MAX_VALUE));
         assertThatSoyExpr("quoteKeysIfJs( ['aaa': $foo, 'bbb': 'blah'] )").translatesTo(
-                new PhpExpr("['aaa' => isset($opt_data['foo']) ? $opt_data['foo'] : null, 'bbb' => 'blah']", Integer.MAX_VALUE));
+                new PhpExpr("array('aaa' => isset($opt_data['foo']) ? $opt_data['foo'] : null, 'bbb' => 'blah')", Integer.MAX_VALUE));
     }
 
     public void testGlobals() {

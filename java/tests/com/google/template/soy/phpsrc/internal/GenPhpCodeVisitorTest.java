@@ -137,7 +137,7 @@ public final class GenPhpCodeVisitorTest extends TestCase {
         String expectedPhpFile = EXPECTED_PHPFILE_START
                 + EXPECTED_PHPMETHOD_START
                 + "  public static function helloWorld($opt_data = null, $opt_ijData = null) {\n"
-                + "    $opt_data = is_array($opt_data) ? $opt_data : [];\n"
+                + "    $opt_data = is_array($opt_data) ? $opt_data : array();\n"
                 + "    $output = '';\n"
                 + "    if (isset($opt_data['foo']) ? $opt_data['foo'] : null) {\n"
                 + "      for ($i### = 0; $i### < 5; $i###++) {\n"

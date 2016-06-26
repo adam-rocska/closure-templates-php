@@ -66,7 +66,7 @@
 /**
  * Demo raw text commands.
  */
-{template .demoRawTextCommands kind="text"}
+{template .demoRawTextCommands}
   <pre>
   // Special characters.
   Space       : AA{sp}BB<br>
@@ -324,7 +324,7 @@
  * @param? name The name of the person who took a trip (optional).
  * @param? destination The destination of the trip (optional).
  */
-{template .tripReport_ private="true" kind="text"}
+{template .tripReport_ private="true"}
   // Note: The template name demonstrates the good practice of adding a trailing underscore to
   // private templates (template that should never be called from hand-written code).
 
@@ -437,7 +437,7 @@
  * @param setName The name of the infinite set.
  * @param setMembers List of the first few members of the set.
  */
-{template .demoDoubleBraces kind="text"}
+{template .demoDoubleBraces}
   // If a Soy tag needs to have brace characters within, use double braces to delimit the tag.
   {{msg desc="Example: The set of prime numbers is {2, 3, 5, 7, 11, 13, ...}."}}
     // Note: This message also demonstrates a useful trick. Since a 'msg' block cannot contain a
@@ -460,7 +460,7 @@
  * Private helper to build a comma separated list.
  * @param items The list of items.
  */
-{template .buildCommaSeparatedList_ private="true" kind="text"}
+{template .buildCommaSeparatedList_ private="true"}
   {foreach $item in $items}
     {if not isFirst($item)}
       ,{sp}
@@ -547,7 +547,7 @@
  * Template that outputs -1 in a right-to-left page and 1 in a left-to-right page, i.e. basically
  * exposes the results of Soy's bidiGlobalDir() to scripts.
  */
-{template .bidiGlobalDir kind="text"}
+{template .bidiGlobalDir}
   {bidiGlobalDir()}
 {/template}
 

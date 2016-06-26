@@ -48,7 +48,7 @@ public final class PhpFunctionExprBuilderTest extends TestCase {
         list.add(42);
 
         func.addArg(PhpExprUtils.convertIterableToPhpArrayExpr(list));
-        assertEquals("some_func(['foo', 'bar', 42])", func.build());
+        assertEquals("some_func(array('foo', 'bar', 42))", func.build());
     }
 
     public void testSinglePyFunctionBuilderArgument() {
